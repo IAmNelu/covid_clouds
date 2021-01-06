@@ -1,0 +1,78 @@
+<table id="gtable" class="table table-bordered my-3 text-left">
+    <thead>
+        <tr class="gray-slot">
+            <th class="text-left py-3 font-weight-bold big-border-bottom text-block" colspan="2">
+                Corona Virus Summary in {{country}}
+            </th>
+        </tr>
+    </thead>
+    <tbody class="my-2">
+        <tr class="yellow-slot">
+            <td>Total Cases</td>
+            <ng-template [ngIf]="summary_data" [ngIfElse]="loading">
+                <td class="text-right">{{total_cases}}</td>
+            </ng-template>
+
+        </tr>
+        <tr class="yellow-slot">
+            <td>New Cases</td>
+            <ng-template [ngIf]="summary_data" [ngIfElse]="loading">
+                <td class="text-right">{{new_cases}}</td>
+            </ng-template>
+
+        </tr>
+        <tr class="yellow-slot">
+            <td>Active Cases</td>
+            <ng-template [ngIf]="summary_data" [ngIfElse]="loading">
+                <td class="text-right">{{active_cases}}</td>
+            </ng-template>
+
+        </tr>
+        <tr class="blue-slot">
+            <td>Total Recovered</td>
+            <ng-template [ngIf]="summary_data" [ngIfElse]="loading">
+                <td class="text-right">{{total_recovered}}</td>
+            </ng-template>
+        </tr>
+        <tr class="blue-slot">
+            <td>New Recovered</td>
+            <ng-template [ngIf]="summary_data" [ngIfElse]="loading">
+                <td class="text-right">{{new_recovered}}</td>
+            </ng-template>
+        </tr>
+        <tr class="blue-slot">
+            <td>Recovery Rate</td>
+            <ng-template [ngIf]="summary_data" [ngIfElse]="loading">
+                <td class="text-right">{{recovery_rate}} %</td>
+            </ng-template>
+        </tr>
+        <tr class="red-slot">
+            <td>Total Deaths</td>
+            <ng-template [ngIf]="summary_data" [ngIfElse]="loading">
+                <td class="text-right">{{total_deaths}}</td>
+            </ng-template>
+        </tr>
+        <tr class="red-slot">
+            <td>New Deaths</td>
+            <ng-template [ngIf]="summary_data" [ngIfElse]="loading">
+                <td class="text-right">{{new_deths}}</td>
+            </ng-template>
+        </tr>
+        <tr class="red-slot">
+            <td>Mortality Rate</td>
+            <ng-template [ngIf]="summary_data" [ngIfElse]="loading">
+                <td class="text-right">{{mortality_rate}} %</td>
+            </ng-template>
+        </tr>
+    </tbody>
+
+</table>
+
+<ng-template #loading>
+    <div class="align-middle">
+        <div class="spinner-border" role="status">
+            <span class="sr-only">Loading...</span>
+        </div>
+        Loading...
+    </div>
+</ng-template>

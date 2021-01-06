@@ -1,0 +1,71 @@
+<div class="modal-dialog">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h3 class="modal-title">Edit This News</h3>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <ng-template [ngIf]="!updating" [ngIfElse]="loading">
+            <div class="modal-body">
+                <form (ngSubmit)="updateNew()">
+                    <div class="row mb-3">
+                        <div class="col-md-12">
+                            <label for="title_new">Title</label>
+                            <input type="text" name="title_new" id="title_new_e" class="form-control"
+                                [(ngModel)]="new_title" placeholder="Insert Title" required />
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-md-12">
+                            <label for="text_new">What do you want to share?</label>
+                            <textarea type="text" name="text_new" id="text_new_e" class="form-control"
+                                [(ngModel)]="new_text" placeholder="Type here the text" rows="5" required></textarea>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+
+                        <div class="col-md-8">
+                            <label for="image_new">Change Image</label>
+                            <input [disabled]="delete_pic" type="file" name="image_new" id="image_new"
+                                class="form-control" #newsPhoto [(ngModel)]="new_img" placeholder="Type here the text"
+                                (change)="onFileSelected($event)" />
+
+                        </div>
+                        <div class="col-md-4 check-div">
+                            <div class="vertical_alignment">
+                                <input [disabled]="no_pic" [(ngModel)]="delete_pic" name="delete_pic"
+                                    class="form-check-input" type="checkbox" value="" id="delete_pic">
+                                <div class="delete_button">
+                                    <fa-icon [icon]="delete_icon"></fa-icon>
+                                    <label class="form-check-label" for="delete_pic">
+                                        Remove Picture
+                                    </label>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </form>
+
+            </div>
+
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" (click)="updateNew()">Edit
+                    News</button>
+            </div>
+        </ng-template>
+
+    </div>
+</div>
+
+<ng-template #loading>
+    <div class="search py-3 px-3">
+        <div class="spinner-border" role="status">
+            <span class="sr-only">Updating News...</span>
+        </div>
+        Updating...
+    </div>
+</ng-template>

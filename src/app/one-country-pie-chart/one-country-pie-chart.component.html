@@ -1,0 +1,14 @@
+<div class="row">
+    <div class="col-md-12">
+        <div class="block-format text-block"> Corona Virus Cases Distribution {{country}}</div>
+    </div>
+</div>
+<div class="row">
+
+    <div class="chart my-3" style="width: 100%;">
+        <canvas baseChart [data]="pieChartData" [labels]="pieChartLabels" [chartType]="pieChartType"
+            [options]="pieChartOptions" [plugins]="pieChartPlugins" [colors]="pieChartColors" [legend]="pieChartLegend">
+        </canvas>
+    </div>
+
+</div>

@@ -1,0 +1,32 @@
+.name-cel{
+    background-color: #6D767D;
+    color: white;
+}
+
+.cas-cel{
+    background-color: #FAE198;
+}
+
+.rec-cel{
+    background-color: #90C7F5;
+}
+
+.det-cel{
+    background-color: #E698AA;
+}
+
+#ctable td, th{
+    border: 3px solid white;
+}
+.icons{
+    text-align: center;
+}
+
+.tableFixHead{
+    overflow-y: auto;
+    height: 700pt; 
+}
+.tableFixHead thead th {
+    position: sticky; 
+    top: 0; 
+}

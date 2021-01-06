@@ -1,0 +1,17 @@
+.add-button-container{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-top: 1em;
+}
+  
+.no_news p{
+    text-align: center;
+    padding-top: 2em;
+    padding-bottom: 2em;
+    color: grey;
+    font-size: 21pt;
+    font-weight: bold;
+    min-height: 5em;
+    line-height: 30pt;
+}

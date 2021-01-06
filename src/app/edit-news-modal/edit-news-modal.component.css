@@ -1,0 +1,11 @@
+.delete_button{
+    display: flex;
+align-items: baseline;
+}
+
+.vertical_alignment{
+   padding-top: 2.4em;
+}
+.search {
+    margin-left: 2em;
+}
