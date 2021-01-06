@@ -1,0 +1,26 @@
+<mat-card class="example-card mb-4">
+    <mat-card-header>
+        <div mat-card-avatar #one></div>
+        <mat-card-title>{{autor_name}} - {{new_data.title}}</mat-card-title>
+        <mat-card-subtitle>{{date_to_display}} - {{place_banner}}</mat-card-subtitle>
+    </mat-card-header>
+    <img mat-card-image src="{{new_data.img_link}}" alt="Photo regarding the News">
+    <mat-card-content>
+        <h3>{{new_data.title}}</h3>
+        <p>
+            {{new_data.content}}
+        </p>
+    </mat-card-content>
+
+    <mat-card-actions *ngIf="can_edit" class="center_buttoms">
+        <button mat-button (click)="deleteNews()">
+            <mat-icon>delete</mat-icon>DELETE
+        </button>
+        <button mat-button (click)="editNews()">
+            <mat-icon>edit</mat-icon>EDIT
+        </button>
+    </mat-card-actions>
+</mat-card>
+<div *ngIf="can_edit" class="modal fade" id="edit_new_modal_{{new_Id}}" tabindex="-1">
+    <app-edit-news-modal #edit_stuff></app-edit-news-modal>
+</div>

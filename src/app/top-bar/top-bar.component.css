@@ -1,0 +1,42 @@
+.clean-button{
+    border-style: none; 
+    background: inherit;
+    background-color: #F8F9FA;
+    border-radius: 0.25rem;
+    margin-right:0;
+    width: 15rem;
+    height: 2.7rem;
+}
+.btn-google {
+    color: #545454;
+    background-color: #ffffff;
+    box-shadow: 0 1px 2px 1px #ddd;
+    width: 20rem;
+    height: 2.7rem;
+    
+}
+.user_top{
+    border-radius: 40px;
+    padding-right: 10pt;
+    font-weight: bold;
+}
+
+.search {
+    margin-right: auto;
+}
+
+#SUForm, #SIForm{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+  }
+
+  #loadingBanner{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+  }

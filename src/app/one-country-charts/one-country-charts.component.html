@@ -1,0 +1,30 @@
+<div class="row text-center my-5">
+    <h3 class="col-md-12">Live Updates Statistics {{country_name}}</h3>
+    <ng-template [ngIf]="data_loaded" [ngIfElse]="loading">
+        <app-one-country-table class="col-12" [summary_data]="data_table" [country]="country_name">
+        </app-one-country-table>
+    </ng-template>
+</div>
+<ng-template [ngIf]="data_loaded" [ngIfElse]="loading">
+    <app-one-country-pie-chart [summary_data]="data_table" [country]="country_name">
+    </app-one-country-pie-chart>
+</ng-template>
+
+<ng-template [ngIf]="data_loaded" [ngIfElse]="loading">
+    <app-one-country-histo [summary_data]="histo_data" [country]="country_name">
+    </app-one-country-histo>
+</ng-template>
+
+<ng-template [ngIf]="data_loaded" [ngIfElse]="loading">
+    <app-one-country-line [summary_data]="line_data" [country]="country_name">
+    </app-one-country-line>
+</ng-template>
+
+<ng-template #loading>
+    <div class="align-middle">
+        <div class="spinner-border" role="status">
+            <span class="sr-only">Loading...</span>
+        </div>
+        Loading...
+    </div>
+</ng-template>

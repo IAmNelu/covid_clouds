@@ -1,0 +1,175 @@
+<div class="modal fade" id="create_one_new" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title" id="exampleModalLabel">Add News</h3>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <ng-template [ngIf]="is_user_logged" [ngIfElse]="noLogged">
+                <div class="modal-body">
+                    <ng-template [ngIf]="!uploading" [ngIfElse]="loading">
+                        <form (ngSubmit)="addNew()">
+                            <div class="row mb-3">
+                                <div class="col-md-12">
+                                    <label for="title_new">Title</label>
+                                    <input type="text" name="title_new" id="title_new" class="form-control"
+                                        [(ngModel)]="new_title" placeholder="Insert Title" required />
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <div class="col-md-12">
+                                    <label for="text_new">What do you want to share?</label>
+                                    <textarea type="text" name="text_new" id="text_new" class="form-control"
+                                        [(ngModel)]="new_text" placeholder="Type here the text" rows="5"
+                                        required></textarea>
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <div class="col-md-12">
+                                    <label for="image_new">Add an Image (it is not mandatory)</label>
+                                    <input type="file" name="image_new" id="image_new" class="form-control" #newsPhoto
+                                        [(ngModel)]="new_img" placeholder="Type here the text"
+                                        (change)="onFileSelected($event)" />
+                                </div>
+
+                            </div>
+                        </form>
+                    </ng-template>
+                </div>
+            </ng-template>
+
+            <div *ngIf="!uploading" class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal"
+                    (click)="clearFields()">Close</button>
+                <button type="button" class="btn btn-primary" (click)="addNew()">Upload
+                    News</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="permission_denied" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title" id="permissionDeniedLabel">Permission Dennied</h3>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span>&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row d-flex justify-content-center">
+                    <img class="col-md-6 img-fluid"
+                        src="https://firebasestorage.googleapis.com/v0/b/covid2-36557.appspot.com/o/denied.png?alt=media&token=798c3d58-a7ab-41d3-8487-f5a956be85e4"
+                        alt="denied_img">
+                </div>
+                <div class="row d-flex justify-content-center">
+                    <div class="col-10 text-justify">
+                        Oops.. You are not alowed to post news here!
+                        Please write an email to <a href="mailto:another_fake.mail@com">another_not_fake@mail.com</a>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<ng-template #loading>
+    <div class="search">
+        <div class="spinner-border" role="status">
+            <span class="sr-only">Uploading New...</span>
+        </div>
+        Uploading...
+    </div>
+</ng-template>
+
+<ng-template #noLogged>
+    <h2 class="alet_text mt-3">OPS! You cannot add news, you should log in first</h2>
+    <div class="modal-body mr-auto ml-auto" id="log-in">
+        <div class="">
+            <div class="text-center">
+                <button class="btn btn-lg btn-google btn-block text-uppercase btn-outline mx-auto" type="button"
+                    data-toggle="collapse" data-target="#collapsedEmail">
+                    <fa-icon [icon]="envelope" width="30" height="30" class="d-inline-block align-top">
+                    </fa-icon>
+                    Log In With Email
+                </button>
+            </div>
+            <div id="collapsedEmail" class="collapse mt-3" data-parent="#log-in">
+                <form (ngSubmit)="login_email()" id="SI2Form" name="signInForm" [formGroup]="signInForm">
+                    <mat-form-field appearance="fill">
+                        <mat-label>Enter your email</mat-label>
+                        <input matInput placeholder="your@example.com" [formControl]="SIemailControl" required>
+                        <mat-error *ngIf="SIemailControl.invalid && (SIemailControl.dirty || SIemailControl.touched)">
+                            <div *ngIf="SIemailControl.errors.required">
+                                Email is required.
+                            </div>
+                            <div *ngIf="SIemailControl.errors.email">
+                                Email not Valid.
+                            </div>
+                        </mat-error>
+                    </mat-form-field>
+                    <mat-form-field appearance="fill" class="form-group">
+                        <mat-label>Choose your password</mat-label>
+                        <input matInput [type]="hideS ? 'password' : 'text'" placeholder="password"
+                            [formControl]="SIpasswordControl" required>
+                        <mat-icon matSuffix (click)="hideS = !hideS">{{hideS ? 'visibility_off' : 'visibility'}}
+                        </mat-icon>
+                        <mat-error
+                            *ngIf="SIpasswordControl.invalid && (SIpasswordControl.dirty || SIpasswordControl.touched)">
+                            <div *ngIf="SIpasswordControl.errors.required">
+                                Password is required.
+                            </div>
+                        </mat-error>
+                    </mat-form-field>
+
+                    <button type="submit" class="btn btn-primary" style="width: 100%;">Log In</button>
+                </form>
+            </div>
+        </div>
+
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <a class="btn btn-lg btn-google btn-block text-uppercase btn-outline mx-auto" data-toggle="modal"
+                data-target="#create_one_new" (click)="log_in_google()"><img
+                    src="https://img.icons8.com/color/16/000000/google-logo.png">
+                Signup
+                Using
+                Google</a>
+        </div>
+    </div> <br>
+</ng-template>
+
+<!--loging in -->
+<div class="modal fade" id="loadLogin" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="siModalLongTitle">Logging in</h5>
+            </div>
+            <div class="modal-body mr-auto ml-auto">
+                <ng-template [ngIf]="finished_logging" [ngIfElse]="loggin">
+                    {{result_login}}</ng-template>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<ng-template #loggin>
+    <div class="search" id="loadingBanner">
+        <div class="spinner-border mx-3" role="status">
+            <span class="sr-only"></span>
+        </div>
+
+        <div class="mx-3"> Logging...</div>
+
+    </div>
+</ng-template>

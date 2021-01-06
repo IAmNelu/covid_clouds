@@ -1,0 +1,28 @@
+<div class="row my-3">
+    <div class="col-md-12">
+        <div class="block-format text-block">Daily Corona Virus Cases Worldwide</div>
+    </div>
+</div>
+
+<div class="row">
+
+    <div class="my-3" style="display: block;width: 100%;">
+        <canvas baseChart [datasets]="barChartData" [labels]="barChartLabels" [options]="barChartOptions"
+            [plugins]="barChartPlugins" [legend]="barChartLegend" [chartType]="barChartType">
+        </canvas>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="block-format text-block">Total Corona Virus Cases Worldwide</div>
+    </div>
+</div>
+<div class="row">
+
+    <div class="chart my-3" style="width: 100%;">
+        <canvas baseChart [datasets]="lineChartData" [labels]="lineChartLabels" [options]="lineChartOptions"
+            [legend]="lineChartLegend" [chartType]="lineChartType" [plugins]="lineChartPlugins">
+        </canvas>
+    </div>
+</div>

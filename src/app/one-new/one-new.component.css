@@ -1,0 +1,15 @@
+.example-card {
+    width: 100%;
+  }
+  
+img{
+    max-height: 70em;
+    object-fit: contain;
+    
+    background-color: #F8F9FA;
+}
+
+.center_buttoms{
+    display: flex;
+    justify-content: center;
+}

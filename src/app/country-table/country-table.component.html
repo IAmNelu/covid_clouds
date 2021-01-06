@@ -1,0 +1,42 @@
+<div class="row my-3">
+    <div class="col-md-12">
+        <div class="block-format text-block">Corona Virus Cases by Country</div>
+    </div>
+</div>
+<div class="tableFixHead">
+    <table id="ctable" class="table table-bordered my-3">
+        <thead>
+            <tr class="text-center">
+                <th *ngFor="let head of headers" class="{{head.cls}}">
+                    {{head.nm}} <br />
+                    <div class="icons">
+                        <fa-icon [icon]="head.up" (click)="click_event(head.cmp, 1, head._i)"></fa-icon>
+                        <fa-icon [icon]="head.dws" (click)="click_event(head.cmp, -1, head._i)"></fa-icon>
+                    </div>
+                </th>
+            </tr>
+        </thead>
+        <tbody class="my-2">
+            <ng-template [ngIf]="data_defined" [ngIfElse]="loading">
+                <tr *ngFor="let country of data_array" class="red-slot" (click)="goToCountry(country.Slug)">
+                    <td class="name-cel">{{country.Country}}</td>
+                    <td class="cas-cel">{{country.NewConfirmed}}</td>
+                    <td class="cas-cel">{{country.TotalConfirmed}}</td>
+                    <td class="rec-cel">{{country.NewRecovered}}</td>
+                    <td class="rec-cel">{{country.TotalRecovered}}</td>
+                    <td class="det-cel">{{country.NewDeaths}}</td>
+                    <td class="det-cel">{{country.TotalDeaths}}</td>
+                </tr>
+            </ng-template>
+        </tbody>
+    </table>
+</div>
+
+<ng-template #loading>
+    <td class="align-middle">
+        <div class="spinner-border" role="status">
+            <span class="sr-only">Loading...</span>
+        </div>
+        Loading...
+    </td>
+</ng-template>

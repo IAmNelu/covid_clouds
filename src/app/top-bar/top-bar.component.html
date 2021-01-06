@@ -1,0 +1,301 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
+    <a class="navbar-brand" href="#">Covid-19 Overview</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+                <a class="nav-link" href="#" (click)="goTo('data')">Data<span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#" (click)="goTo('news')">News</a>
+            </li>
+
+        </ul>
+        <ng-template [ngIf]="countries" [ngIfElse]="loading">
+            <form class="search">
+                <mat-form-field class="on_top">
+                    <mat-label>Country</mat-label>
+                    <input type="text" matInput [formControl]="myControl" [matAutocomplete]="auto">
+                    <mat-autocomplete class="on_top" #auto="matAutocomplete" [displayWith]="displayFn"
+                        (optionSelected)='go_to_country($event.option.value)'>
+                        <mat-option class="on_top" *ngFor="let country_obj of filteredOptions | async"
+                            [value]="country_obj.Slug">
+                            {{country_obj.Country}}
+                        </mat-option>
+                    </mat-autocomplete>
+                </mat-form-field>
+            </form>
+        </ng-template>
+
+        <ng-template [ngIf]="no_logged" [ngIfElse]="userProfile">
+            <div class="mx-3">
+                <button class="mx-1 btn btn-outline-success my-2 my-sm-0" data-toggle="modal"
+                    data-target="#signInModal">Sign In</button>
+                <button class="btn btn-success my-2 my-sm-0" data-toggle="modal" data-target="#signUpModal">Sign
+                    Up</button>
+            </div>
+        </ng-template>
+    </div>
+
+</nav>
+
+<!-- Modal -->
+<div class="modal fade" id="signInModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="siModalLongTitle">Sign In</h5>
+                <button id="close_modal" type="button" class="close" data-dismiss="modal">
+                    <span>&times;</span>
+                </button>
+            </div>
+            <div class="modal-body mr-auto ml-auto" id="log-in">
+                <div class="">
+                    <div class="text-center">
+                        <button class="btn btn-lg btn-google btn-block text-uppercase btn-outline mx-auto" type="button"
+                            data-toggle="collapse" data-target="#collapsedEmail">
+                            <fa-icon [icon]="envelope" width="30" height="30" class="d-inline-block align-top">
+                            </fa-icon>
+                            Log In With Email
+                        </button>
+                    </div>
+                    <div id="collapsedEmail" class="collapse mt-3" data-parent="#log-in">
+                        <form (ngSubmit)="login_email()" id="SIForm" name="signInForm" [formGroup]="signInForm">
+                            <mat-form-field appearance="fill">
+                                <mat-label>Enter your email</mat-label>
+                                <input matInput placeholder="your@example.com" [formControl]="SIemailControl" required>
+                                <mat-error
+                                    *ngIf="SIemailControl.invalid && (SIemailControl.dirty || SIemailControl.touched)">
+                                    <div *ngIf="SIemailControl.errors.required">
+                                        Email is required.
+                                    </div>
+                                    <div *ngIf="SIemailControl.errors.email">
+                                        Email not Valid.
+                                    </div>
+                                </mat-error>
+                            </mat-form-field>
+                            <mat-form-field appearance="fill" class="form-group">
+                                <mat-label>Choose your password</mat-label>
+                                <input matInput [type]="hideS ? 'password' : 'text'" placeholder="password"
+                                    [formControl]="SIpasswordControl" required>
+                                <mat-icon matSuffix (click)="hideS = !hideS">{{hideS ? 'visibility_off' : 'visibility'}}
+                                </mat-icon>
+                                <mat-error
+                                    *ngIf="SIpasswordControl.invalid && (SIpasswordControl.dirty || SIpasswordControl.touched)">
+                                    <div *ngIf="SIpasswordControl.errors.required">
+                                        Password is required.
+                                    </div>
+                                </mat-error>
+                            </mat-form-field>
+
+                            <button type="submit" class="btn btn-primary" style="width: 100%;">Log In</button>
+                        </form>
+                    </div>
+                </div>
+
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <a class="btn btn-lg btn-google btn-block text-uppercase btn-outline mx-auto" data-toggle="modal"
+                        data-target="#signInModal" (click)="log_in_google()"><img
+                            src="https://img.icons8.com/color/16/000000/google-logo.png">
+                        Signup
+                        Using
+                        Google</a>
+                </div>
+            </div> <br>
+            <div class="modal-footer mr-auto ml-auto">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- Modal -->
+<div class="modal fade" id="signUpModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="siModalLongTitle">Create New Account</h5>
+                <button id="close_modal" type="button" class="close" data-dismiss="modal">
+                    <span>&times;</span>
+                </button>
+            </div>
+            <div class="modal-body mr-auto ml-auto" id="log-in">
+                <div class="">
+                    <form (ngSubmit)="create_account()" id="SUForm" name="signupForm" [formGroup]="signupForm">
+
+                        <mat-form-field appearance="fill">
+                            <mat-label>Enter your email</mat-label>
+                            <input matInput placeholder="pat@example.com" [formControl]="SUemailControl" required>
+                            <mat-error
+                                *ngIf="SUemailControl.invalid && (SUemailControl.dirty || SUemailControl.touched)">
+                                <div *ngIf="SUemailControl.errors.required">
+                                    Email is required.
+                                </div>
+                                <div *ngIf="SUemailControl.errors.email">
+                                    Email not Valid.
+                                </div>
+                            </mat-error>
+                        </mat-form-field>
+                        <mat-form-field appearance="fill" class="form-group row">
+                            <mat-label>Choose your password</mat-label>
+                            <input matInput [type]="hideP ? 'password' : 'text'" placeholder="password"
+                                [formControl]="SUpasswordControl" required>
+                            <mat-icon matSuffix (click)="hideP = !hideP">{{hideP ? 'visibility_off' : 'visibility'}}
+                            </mat-icon>
+                            <mat-error
+                                *ngIf="SUpasswordControl.invalid && (SUpasswordControl.dirty || SUpasswordControl.touched)">
+                                <div *ngIf="SUpasswordControl.errors.required">
+                                    Password is required.
+                                </div>
+                                <div *ngIf="SUpasswordControl.errors.pattern">
+                                    Password must contain minimum eight characters, at least one uppercase letter,
+                                    one
+                                    lowercase letter and one number.
+                                </div>
+                            </mat-error>
+                        </mat-form-field>
+                        <mat-form-field appearance="fill" class="form-group row">
+                            <mat-label>Retype your password</mat-label>
+                            <input matInput [type]="hideC ? 'password' : 'text'" placeholder="password"
+                                [formControl]="SUpasswordConControl" required>
+                            <mat-icon matSuffix (click)="hideC = !hideC">{{hideC ? 'visibility_off' : 'visibility'}}
+                            </mat-icon>
+                            <mat-error
+                                *ngIf="SUpasswordConControl.invalid && (SUpasswordConControl.dirty || SUpasswordConControl.touched)">
+                                <div *ngIf="SUpasswordConControl.errors.required">
+                                    Confirmation password is required.
+                                </div>
+                                <div *ngIf="SUpasswordConControl.errors.noMatch">
+                                    Password does not match.
+                                </div>
+                            </mat-error>
+                        </mat-form-field>
+                        <mat-form-field appearance="fill" class="form-group row">
+                            <mat-label>Please write your name</mat-label>
+                            <input matInput type="text" placeholder="Name" [formControl]="SUNameControl" required>
+                            <mat-error *ngIf="SUNameControl.invalid && (SUNameControl.dirty || SUNameControl.touched)">
+                                <div *ngIf="SUNameControl.errors.required">
+                                    Your name is required.
+                                </div>
+                            </mat-error>
+                        </mat-form-field>
+                        <mat-form-field appearance="fill" class="form-group row">
+                            <mat-label>Please write your surname</mat-label>
+                            <input matInput type="text" placeholder="surname" [formControl]="SUSurNameControl" required>
+                            <mat-error
+                                *ngIf="SUSurNameControl.invalid && (SUSurNameControl.dirty || SUSurNameControl.touched)">
+                                <div *ngIf="SUSurNameControl.errors.required">
+                                    Your surname is required.
+                                </div>
+
+                            </mat-error>
+                        </mat-form-field>
+                        <button type="submit" class="btn btn-primary" style="width: 100%;">Create Account</button>
+
+                    </form>
+
+                </div>
+
+            </div>
+            <div class="text-center mb-3"> - or - </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <a class="btn btn-lg btn-google btn-block text-uppercase btn-outline mx-auto" data-toggle="modal"
+                        data-target="#signInModal" (click)="log_in_google()"><img
+                            src="https://img.icons8.com/color/16/000000/google-logo.png">
+                        Signup
+                        Using
+                        Google</a>
+                </div>
+            </div> <br>
+            <div class="modal-footer mr-auto ml-auto">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--loging in -->
+<div class="modal fade" id="loadLogin" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="siModalLongTitle">Logging in</h5>
+            </div>
+            <div class="modal-body mr-auto ml-auto">
+                <ng-template [ngIf]="not_logging" [ngIfElse]="loggin">
+                    {{result_login}}</ng-template>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+
+<div *ngIf="!no_logged" class="modal fade" id="userModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="siModalLongTitle">Profile</h5>
+                <button id="close_modal" type="button" class="close" data-dismiss="modal">
+                    <span>&times;</span>
+                </button>
+            </div>
+            <div class="modal-body mr-auto ml-auto">
+                <div class="text-center">
+                    <img src="{{user.plink}}" class="rounded img-fluid text-center" alt="Profile Picture">
+                    <h3 class="my-3">{{user.displayName}}</h3>
+                    <h5><a href="mailto:{{user.email}}">{{user.email}}</a></h5>
+                </div>
+            </div>
+
+            <div class="modal-footer mr-auto ml-auto">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="sign_out()">Sign
+                    Out</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+
+
+
+
+<ng-template #userProfile>
+    <div class="btn-outline-success user_top" data-toggle="modal" data-target="#userModal">
+        <img src="{{user.plink}}" class="rounded-circle img-fluid" width="40" alt="Profile Picture">
+        {{user.displayName}}
+    </div>
+</ng-template>
+
+
+<ng-template #loading>
+    <div class="search" id="loadingBanner">
+        <div class="spinner-border mx-3" role="status">
+            <span class="sr-only"></span>
+        </div>
+
+        <div class="mx-3"> Loading...</div>
+
+    </div>
+</ng-template>
+
+<ng-template #loggin>
+    <div class="search" id="loadingBanner">
+        <div class="spinner-border mx-3" role="status">
+            <span class="sr-only"></span>
+        </div>
+        <div class="mx-3"> Logging...</div>
+
+    </div>
+</ng-template>
