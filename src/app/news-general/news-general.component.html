@@ -1,23 +1,23 @@
 <div class="row text-center">
-    <h1 class="col-md-12"><img
-            src="https://firebasestorage.googleapis.com/v0/b/covidc-ad7bd.appspot.com/o/covid_cell.png?alt=media&token=80dd54eb-b8d3-4c40-ab86-192e78f88e7c"
-            alt="covid ico" style="height: 1.5em">COVID-19</h1>
-    <div class="row text-center semi_title">
-        <h3 class="col-md-12">News Related to Covid-19 {{place}}</h3>
+  <h1 class="col-md-12"><img
+      src="https://firebasestorage.googleapis.com/v0/b/covid2-36557.appspot.com/o/covid-icon.png?alt=media&token=905925a3-c5ce-4151-b083-cbfbba9ae8ce"
+      alt="covid ico" style="height: 1.5em">COVID-19</h1>
+  <div class="row text-center semi_title">
+    <h3 class="col-md-12">News Related to Covid-19 {{place}}</h3>
 
-    </div>
+  </div>
 </div>
 
 <app-one-new *ngFor="let id of all_news_id" [new_Id]="id" [new_data]="all_news[id]" (manageNews)=manageNews($event)>
 </app-one-new>
 <div *ngIf="all_news_id.length==0" class="no_news">
-    <p> It looks like there are no News in here!! Stay tunned and if you have something wirte us at <a
-            href="mailto:fake_email.com">definitley.not.fake@email.com</a></p>
+  <p> It looks like there are no News in here!! Stay tunned and if you have something wirte us at <a
+      href="mailto:fake_email.com">definitley.not.fake@email.com</a></p>
 </div>
 <div class="add-button-container">
-    <button mat-fab color="primary" data-toggle="modal" data-target="#create_one_new">
-        <mat-icon>add</mat-icon>
-    </button>
+  <button mat-fab color="primary" data-toggle="modal" data-target="#create_one_new">
+    <mat-icon>add</mat-icon>
+  </button>
 </div>
 
 <app-create-new-modal (addNewToParent)=addNewToList($event) [target]="target_slug"></app-create-new-modal>
