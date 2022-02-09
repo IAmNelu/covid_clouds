@@ -11,8 +11,6 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { environment } from 'src/environments/environment';
 import { SigninBannerComponent } from './signin-banner/signin-banner.component';
-import { HomeComponent } from './data-page/home/home.component';
-import { SummayTableComponent } from './summay-table/summay-table.component';
 
 import { ChartsModule } from 'ng2-charts';
 import { HistogramComponent } from './histogram/histogram.component';
@@ -40,14 +38,13 @@ import { CreateNewModalComponent } from './create-new-modal/create-new-modal.com
 import { EditNewsModalComponent } from './edit-news-modal/edit-news-modal.component';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { PasswordMatchDirective } from './password-match.directive';
+import { HomeModule } from './data-page/home/home.module';
 
 
 @NgModule({
   declarations: [
     AppComponent,
     SigninBannerComponent,
-    HomeComponent,
-    SummayTableComponent,
     HistogramComponent,
     CountryTableComponent,
     TopBarComponent,
@@ -63,6 +60,7 @@ import { PasswordMatchDirective } from './password-match.directive';
     PasswordMatchDirective,
   ],
   imports: [
+    HomeModule,
     ChartsModule,
     BrowserModule,
     HttpClientModule,

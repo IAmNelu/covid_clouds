@@ -1,0 +1,24 @@
+#mtable {
+  border: 4px solid white;
+}
+
+#mtable *{
+  border: 3px solid white;
+}
+
+.yellow-slot{
+  background-color: #FAE198;
+}
+
+.blue-slot{
+  background-color: #90C7F5;
+}
+
+.red-slot{
+  background-color: #E698AA;
+}
+
+
+.big-border-bottom{
+  border-bottom: 10px solid white !important;
+}
