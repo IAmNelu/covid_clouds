@@ -1,17 +1,17 @@
 import { Component, OnInit } from '@angular/core';
-import { CovidcService } from '../covidc.service';
+import { CovidcService } from '../services/covidc.service';
 
 @Component({
-    selector: 'app-home',
-    templateUrl: './home.component.html',
-    styleUrls: ['./home.component.css']
+  selector: 'app-home',
+  templateUrl: './home.component.html',
+  styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit {
 
-    constructor(public covidcService: CovidcService) { }
+  constructor(public covidcService: CovidcService) { }
 
-    ngOnInit(): void {
+  ngOnInit(): void {
 
-    }
+  }
 
 }
