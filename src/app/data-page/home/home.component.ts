@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { CovidcService } from '../services/covidc.service';
+import { CovidcService } from '../../services/covidc.service';
 
 @Component({
   selector: 'app-home',

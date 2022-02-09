@@ -11,7 +11,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { environment } from 'src/environments/environment';
 import { SigninBannerComponent } from './signin-banner/signin-banner.component';
-import { HomeComponent } from './home/home.component';
+import { HomeComponent } from './data-page/home/home.component';
 import { SummayTableComponent } from './summay-table/summay-table.component';
 
 import { ChartsModule } from 'ng2-charts';
