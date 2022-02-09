@@ -4,7 +4,7 @@
   "scripts": {
     "ng": "ng",
     "config": "ts-node ./setenv.ts",
-    "config-git": "ts-node ../setenv_secrets.ts",
+    "config-git": "ts-node ./setenvgit.ts",
     "start": "npm run config -- --environment=dev && ng serve --port 8000",
     "build": "npm run config-git -- --environment=prod && ng build",
     "buildlocal": "npm run config -- --environment=prod && ng build",
